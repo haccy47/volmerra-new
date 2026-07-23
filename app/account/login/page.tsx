@@ -1,3 +1,6 @@
+"use client";
+
+import { motion } from "framer-motion";
 import { signIn } from "../../actions/auth";
 
 export default function LoginPage() {
@@ -28,8 +31,22 @@ export default function LoginPage() {
       />
 
 
-      {/* Navbar style glass panel */}
-      <div
+      {/* Glass Panel */}
+      <motion.div
+        initial={{
+          opacity: 0,
+          y: 40,
+          scale: 0.95,
+        }}
+        animate={{
+          opacity: 1,
+          y: 0,
+          scale: 1,
+        }}
+        transition={{
+          duration: 0.8,
+          ease: "easeOut",
+        }}
         className="
         relative
         z-10
@@ -39,7 +56,8 @@ export default function LoginPage() {
         border
         border-white/20
         bg-white/10
-        p-10
+        p-6
+        sm:p-10
         shadow-2xl
         backdrop-blur-xl
         "
@@ -47,18 +65,31 @@ export default function LoginPage() {
 
         <div className="text-center">
 
-          <h1
+          <motion.h1
+            initial={{
+              opacity: 0,
+              y: -20,
+            }}
+            animate={{
+              opacity: 1,
+              y: 0,
+            }}
+            transition={{
+              delay: 0.3,
+              duration: 0.6,
+            }}
             className="
             font-cinzel
-            text-5xl
+            text-4xl
+            sm:text-5xl
             font-black
-            tracking-[0.25em]
+            tracking-[0.18em]
             text-white
             drop-shadow-xl
             "
           >
             VOLMERRA
-          </h1>
+          </motion.h1>
 
 
           <p
@@ -74,6 +105,7 @@ export default function LoginPage() {
           </p>
 
         </div>
+
 
 
         <form
@@ -150,7 +182,7 @@ export default function LoginPage() {
         </form>
 
 
-      </div>
+      </motion.div>
 
 
     </main>
