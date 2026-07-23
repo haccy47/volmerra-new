@@ -16,362 +16,343 @@ import {
 
 
 const menu = [
-  { name:"Hikaye", icon:BookOpen },
-  { name:"Harita", icon:Map },
-  { name:"Karakterler", icon:UserRound },
-  { name:"Taşlar", icon:Gem },
-  { name:"Quizler", icon:FileText },
-  { name:"Hesap", icon:User },
+  { name: "Hikaye", icon: BookOpen },
+  { name: "Harita", icon: Map },
+  { name: "Karakterler", icon: UserRound },
+  { name: "Taşlar", icon: Gem },
+  { name: "Quizler", icon: FileText },
+  { name: "Hesap", icon: User },
 ];
 
 
 const spring = {
-  type:"spring",
-  stiffness:220,
-  damping:22,
+  type: "spring" as const,
+  stiffness: 220,
+  damping: 22,
 };
 
 
-export default function MobileNavbar(){
+export default function MobileNavbar() {
 
-const [menuOpen,setMenuOpen]=useState(false);
-const [searchOpen,setSearchOpen]=useState(false);
+  const [menuOpen, setMenuOpen] = useState(false);
+  const [searchOpen, setSearchOpen] = useState(false);
 
 
-return(
+  return (
 
-<header
-className="
-fixed
-top-5
-left-0
-right-0
-z-[100]
-flex
-justify-between
-px-5
-md:hidden
-"
->
+    <header
+      className="
+      fixed
+      top-5
+      left-0
+      right-0
+      z-[100]
+      flex
+      justify-between
+      px-5
+      md:hidden
+      "
+    >
 
 
-{/* SEARCH BUTTON */}
+      {/* Search Button */}
 
-<AnimatePresence>
+      <AnimatePresence>
+        {!searchOpen && (
 
-{!searchOpen && (
+          <motion.button
 
-<motion.button
+            initial={{ scale: 0 }}
+            animate={{ scale: 1 }}
+            exit={{ scale: 0 }}
 
-initial={{
-scale:0
-}}
+            transition={spring}
 
-animate={{
-scale:1
-}}
+            onClick={() => setSearchOpen(true)}
 
-exit={{
-scale:0
-}}
+            className="
+            flex
+            h-12
+            w-12
+            items-center
+            justify-center
+            rounded-full
+            border
+            border-white/20
+            bg-white/10
+            text-white
+            shadow-xl
+            backdrop-blur-xl
+            "
 
-transition={spring}
+          >
 
-onClick={()=>setSearchOpen(true)}
+            <Search size={22}/>
 
-className="
-flex
-h-12
-w-12
-items-center
-justify-center
-rounded-full
-border
-border-white/20
-bg-white/10
-text-white
-shadow-xl
-backdrop-blur-xl
-"
+          </motion.button>
 
->
+        )}
+      </AnimatePresence>
 
-<Search size={22}/>
 
-</motion.button>
 
-)}
 
-</AnimatePresence>
 
+      {/* Menu Button */}
 
+      <AnimatePresence>
+        {!menuOpen && (
 
+          <motion.button
 
-{/* MENU BUTTON */}
+            initial={{ scale:0 }}
+            animate={{ scale:1 }}
+            exit={{ scale:0 }}
 
-<AnimatePresence>
+            transition={spring}
 
-{!menuOpen && (
+            onClick={() => setMenuOpen(true)}
 
-<motion.button
+            className="
+            flex
+            h-12
+            w-12
+            items-center
+            justify-center
+            rounded-full
+            border
+            border-white/20
+            bg-white/10
+            text-white
+            shadow-xl
+            backdrop-blur-xl
+            "
 
-initial={{
-scale:0
-}}
+          >
 
-animate={{
-scale:1
-}}
+            <Menu size={24}/>
 
-exit={{
-scale:0
-}}
+          </motion.button>
 
-transition={spring}
+        )}
+      </AnimatePresence>
 
-onClick={()=>setMenuOpen(true)}
 
-className="
-flex
-h-12
-w-12
-items-center
-justify-center
-rounded-full
-border
-border-white/20
-bg-white/10
-text-white
-shadow-xl
-backdrop-blur-xl
-"
 
->
 
-<Menu size={24}/>
 
-</motion.button>
 
-)}
 
-</AnimatePresence>
 
+      {/* Search Panel */}
 
+      <AnimatePresence>
 
+        {searchOpen && (
 
+          <motion.div
 
+            initial={{
+              width:48,
+              opacity:0
+            }}
 
-{/* SEARCH */}
+            animate={{
+              width:"calc(100vw - 40px)",
+              opacity:1
+            }}
 
-<AnimatePresence>
+            exit={{
+              width:48,
+              opacity:0
+            }}
 
-{searchOpen && (
+            transition={spring}
 
-<motion.div
+            className="
+            absolute
+            left-5
+            top-0
+            flex
+            h-12
+            items-center
+            overflow-hidden
+            rounded-full
+            border
+            border-white/20
+            bg-white/10
+            px-5
+            shadow-xl
+            backdrop-blur-xl
+            "
 
-initial={{
-width:48,
-opacity:0
-}}
+          >
 
-animate={{
-width:"calc(100vw - 40px)",
-opacity:1
-}}
+            <input
+              autoFocus
+              placeholder="Volmerra'da ara..."
+              className="
+              flex-1
+              bg-transparent
+              text-white
+              outline-none
+              placeholder:text-white/50
+              "
+            />
 
-exit={{
-width:48,
-opacity:0
-}}
 
-transition={spring}
+            <button
+              onClick={() => setSearchOpen(false)}
+              className="text-white"
+            >
 
-className="
-absolute
-left-5
-top-0
-h-12
-rounded-full
-border
-border-white/20
-bg-white/10
-shadow-xl
-backdrop-blur-xl
-flex
-items-center
-px-5
-overflow-hidden
-"
+              <X size={22}/>
 
->
+            </button>
 
 
-<input
+          </motion.div>
 
-autoFocus
+        )}
 
-placeholder="Volmerra'da ara..."
+      </AnimatePresence>
 
-className="
-flex-1
-bg-transparent
-text-white
-outline-none
-placeholder:text-white/50
-"
 
-/>
 
 
-<button
-onClick={()=>setSearchOpen(false)}
-className="text-white"
->
 
-<X size={22}/>
 
-</button>
 
 
-</motion.div>
 
-)}
+      {/* Menu Panel */}
 
-</AnimatePresence>
+      <AnimatePresence>
 
+        {menuOpen && (
 
+          <motion.div
 
+            initial={{
+              width:48,
+              height:48,
+              opacity:0
+            }}
 
+            animate={{
+              width:280,
+              height:420,
+              opacity:1
+            }}
 
+            exit={{
+              width:48,
+              height:48,
+              opacity:0
+            }}
 
+            transition={spring}
 
-{/* MENU PANEL */}
+            className="
+            absolute
+            right-5
+            top-0
+            overflow-hidden
+            rounded-3xl
+            border
+            border-white/20
+            bg-white/10
+            p-6
+            text-white
+            shadow-2xl
+            backdrop-blur-xl
+            "
 
-<AnimatePresence>
+          >
 
-{menuOpen && (
 
-<motion.div
+            <div className="
+            mb-6
+            flex
+            justify-end
+            ">
 
-initial={{
-width:48,
-height:48,
-opacity:0
-}}
+              <button
+                onClick={() => setMenuOpen(false)}
+              >
 
-animate={{
-width:280,
-height:420,
-opacity:1
-}}
+                <X size={25}/>
 
-exit={{
-width:48,
-height:48,
-opacity:0
-}}
+              </button>
 
-transition={spring}
+            </div>
 
-className="
-absolute
-right-5
-top-0
-overflow-hidden
-rounded-3xl
-border
-border-white/20
-bg-white/10
-p-6
-text-white
-shadow-2xl
-backdrop-blur-xl
-"
 
->
 
 
-<div className="
-flex
-justify-end
-mb-6
-">
 
-<button
-onClick={()=>setMenuOpen(false)}
->
+            <div className="
+            flex
+            flex-col
+            gap-5
+            ">
 
-<X size={25}/>
+              {menu.map((item,index)=>{
 
-</button>
+                const Icon = item.icon;
 
-</div>
 
+                return (
 
+                  <motion.div
 
-<div className="flex flex-col gap-5">
+                    key={item.name}
 
-{
-menu.map((item,index)=>{
+                    initial={{
+                      opacity:0,
+                      x:40
+                    }}
 
-const Icon=item.icon;
+                    animate={{
+                      opacity:1,
+                      x:0
+                    }}
 
+                    transition={{
+                      delay:index * 0.08
+                    }}
 
-return(
+                    className="
+                    flex
+                    items-center
+                    gap-4
+                    "
 
-<motion.div
+                  >
 
-key={item.name}
+                    <Icon size={24}/>
 
-initial={{
-opacity:0,
-x:40
-}}
+                    <span>
+                      {item.name}
+                    </span>
 
-animate={{
-opacity:1,
-x:0
-}}
+                  </motion.div>
 
-transition={{
-delay:index*.08
-}}
+                );
 
-className="
-flex
-items-center
-gap-4
-"
+              })}
 
->
+            </div>
 
-<Icon size={24}/>
 
-<span>
-{item.name}
-</span>
+          </motion.div>
 
-</motion.div>
+        )}
 
-)
+      </AnimatePresence>
 
-})
 
-}
+    </header>
 
-</div>
-
-
-</motion.div>
-
-)}
-
-</AnimatePresence>
-
-
-
-</header>
-
-)
-
+  );
 }
