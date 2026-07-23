@@ -16,31 +16,20 @@ import {
 
 
 const menu = [
-  {
-    name:"Hikaye",
-    icon:BookOpen,
-  },
-  {
-    name:"Harita",
-    icon:Map,
-  },
-  {
-    name:"Karakterler",
-    icon:UserRound,
-  },
-  {
-    name:"Taşlar",
-    icon:Gem,
-  },
-  {
-    name:"Quizler",
-    icon:FileText,
-  },
-  {
-    name:"Hesap",
-    icon:User,
-  },
+  { name:"Hikaye", icon:BookOpen },
+  { name:"Harita", icon:Map },
+  { name:"Karakterler", icon:UserRound },
+  { name:"Taşlar", icon:Gem },
+  { name:"Quizler", icon:FileText },
+  { name:"Hesap", icon:User },
 ];
+
+
+const spring = {
+  type:"spring",
+  stiffness:220,
+  damping:22,
+};
 
 
 export default function MobileNavbar(){
@@ -68,11 +57,25 @@ md:hidden
 
 {/* SEARCH BUTTON */}
 
+<AnimatePresence>
+
+{!searchOpen && (
+
 <motion.button
 
-whileTap={{
-scale:.9
+initial={{
+scale:0
 }}
+
+animate={{
+scale:1
+}}
+
+exit={{
+scale:0
+}}
+
+transition={spring}
 
 onClick={()=>setSearchOpen(true)}
 
@@ -97,16 +100,34 @@ backdrop-blur-xl
 
 </motion.button>
 
+)}
+
+</AnimatePresence>
+
 
 
 
 {/* MENU BUTTON */}
 
+<AnimatePresence>
+
+{!menuOpen && (
+
 <motion.button
 
-whileTap={{
-scale:.9
+initial={{
+scale:0
 }}
+
+animate={{
+scale:1
+}}
+
+exit={{
+scale:0
+}}
+
+transition={spring}
 
 onClick={()=>setMenuOpen(true)}
 
@@ -131,60 +152,59 @@ backdrop-blur-xl
 
 </motion.button>
 
+)}
+
+</AnimatePresence>
 
 
 
 
-{/* SEARCH PANEL */}
+
+
+{/* SEARCH */}
 
 <AnimatePresence>
 
-{
-searchOpen && (
+{searchOpen && (
 
 <motion.div
 
 initial={{
-opacity:0,
-scale:.2,
-x:-80
+width:48,
+opacity:0
 }}
 
 animate={{
-opacity:1,
-scale:1,
-x:0
+width:"calc(100vw - 40px)",
+opacity:1
 }}
 
 exit={{
-opacity:0,
-scale:.2,
-x:-80
+width:48,
+opacity:0
 }}
 
-transition={{
-duration:.45,
-ease:"easeInOut"
-}}
+transition={spring}
 
 className="
 absolute
 left-5
 top-0
-right-5
 h-12
 rounded-full
 border
 border-white/20
 bg-white/10
-backdrop-blur-xl
 shadow-xl
+backdrop-blur-xl
 flex
 items-center
 px-5
+overflow-hidden
 "
 
 >
+
 
 <input
 
@@ -215,9 +235,7 @@ className="text-white"
 
 </motion.div>
 
-)
-
-}
+)}
 
 </AnimatePresence>
 
@@ -231,39 +249,35 @@ className="text-white"
 
 <AnimatePresence>
 
-{
-menuOpen && (
+{menuOpen && (
 
 <motion.div
 
 initial={{
-opacity:0,
-scale:.2,
-x:80
+width:48,
+height:48,
+opacity:0
 }}
 
 animate={{
-opacity:1,
-scale:1,
-x:0
+width:280,
+height:420,
+opacity:1
 }}
 
 exit={{
-opacity:0,
-scale:.2,
-x:80
+width:48,
+height:48,
+opacity:0
 }}
 
-transition={{
-duration:.45,
-ease:"easeInOut"
-}}
+transition={spring}
 
 className="
 absolute
 right-5
 top-0
-w-72
+overflow-hidden
 rounded-3xl
 border
 border-white/20
@@ -280,7 +294,7 @@ backdrop-blur-xl
 <div className="
 flex
 justify-end
-mb-5
+mb-6
 ">
 
 <button
@@ -295,11 +309,7 @@ onClick={()=>setMenuOpen(false)}
 
 
 
-<div className="
-flex
-flex-col
-gap-5
-">
+<div className="flex flex-col gap-5">
 
 {
 menu.map((item,index)=>{
@@ -341,7 +351,6 @@ gap-4
 {item.name}
 </span>
 
-
 </motion.div>
 
 )
@@ -355,9 +364,7 @@ gap-4
 
 </motion.div>
 
-)
-
-}
+)}
 
 </AnimatePresence>
 
