@@ -166,46 +166,45 @@ export default function Hero() {
 
           <Link
 
-            href="/account"
+  href="/register"
 
-            className="
-            relative
-            z-50
-            mt-10
-            inline-block
-            rounded-full
+  className="
+  relative
+  z-50
+  mt-10
+  inline-block
+  rounded-full
 
-            border
-            border-white/30
+  border
+  border-white/30
 
-            bg-white/10
+  bg-white/10
 
-            px-8
-            py-4
+  px-8
+  py-4
 
-            font-inter
-            text-sm
-            font-bold
-            uppercase
+  font-inter
+  text-sm
+  font-bold
+  uppercase
 
-            tracking-[0.25em]
+  tracking-[0.25em]
 
-            text-white
+  text-white
 
-            backdrop-blur-xl
+  backdrop-blur-xl
 
-            transition-all
-            duration-300
+  transition-all
+  duration-300
 
-            hover:scale-105
-            hover:bg-white/20
-            "
+  hover:scale-105
+  hover:bg-white/20
+  "
 
-          >
+>
+  Volmerra'ya Katıl
 
-            Volmerra'ya Katıl
-
-          </Link>
+</Link>
 
 
         </motion.div>
