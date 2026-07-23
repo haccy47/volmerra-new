@@ -2,80 +2,288 @@
 
 import Link from "next/link";
 import { useState } from "react";
-import { Menu, X } from "lucide-react";
+import { motion, AnimatePresence } from "framer-motion";
+import {
+  BookOpen,
+  Map,
+  UserRound,
+  Gem,
+  FileText,
+  Search,
+  X,
+} from "lucide-react";
 
-const links = [
-  { name: "Dünya", href: "#" },
-  { name: "Karakterler", href: "#" },
-  { name: "Taşlar", href: "#" },
-  { name: "Bölgeler", href: "#" },
-  { name: "Sezonlar", href: "#" },
-  { name: "Hikaye", href: "#" },
+
+const menu = [
+  { name: "Hikaye", icon: BookOpen, href: "/" },
+  { name: "Harita", icon: Map, href: "/" },
+  { name: "Karakterler", icon: UserRound, href: "/" },
+  { name: "Taşlar", icon: Gem, href: "/" },
+  { name: "Quizler", icon: FileText, href: "/" },
 ];
 
+
 export default function Navbar() {
-  const [open, setOpen] = useState(false);
+
+  const [searchOpen, setSearchOpen] = useState(false);
+  const [transitioning, setTransitioning] = useState(false);
+
+
+  function openSearch(){
+
+    setTransitioning(true);
+
+    setTimeout(()=>{
+      setSearchOpen(true);
+      setTransitioning(false);
+    },400);
+
+  }
+
+
+  function closeSearch(){
+
+    setTransitioning(true);
+
+    setTimeout(()=>{
+      setSearchOpen(false);
+      setTransitioning(false);
+    },400);
+
+  }
+
 
   return (
-    <>
-      <header className="fixed top-0 left-0 z-50 w-full">
-        <div className="flex h-20 items-center justify-between px-8">
 
-          {/* Logo */}
-          <Link
-            href="/"
-            className="text-3xl font-black tracking-[0.3em] text-white"
-          >
-            VOLMERRA
-          </Link>
+    <header
+      className="
+      fixed
+      left-1/2
+      top-6
+      z-50
+      hidden
+      -translate-x-1/2
+      md:block
+      "
+    >
 
-          {/* Desktop */}
-          <nav className="hidden gap-8 md:flex">
-            {links.map((link) => (
-              <Link
-                key={link.name}
-                href={link.href}
-                className="text-sm uppercase tracking-widest text-white/80 transition hover:text-orange-400"
-              >
-                {link.name}
-              </Link>
-            ))}
-          </nav>
+      <motion.nav
 
-          {/* Mobile Button */}
-         <button
-  type="button"
-  onClick={() => setOpen(!open)}
-  className="relative z-[100] text-white md:hidden"
->
-            {open ? <X size={34} /> : <Menu size={34} />}
-          </button>
+        animate={{
+          width:
+          searchOpen
+          ? 320
+          : transitioning
+          ? 60
+          : "auto"
+        }}
 
-        </div>
-      </header>
+        transition={{
+          duration:0.4,
+          ease:"easeInOut"
+        }}
 
-
-      {/* Mobile Menu */}
-      <div
-        className={`fixed inset-0 z-40 bg-black/95 backdrop-blur-xl transition-transform duration-300 md:hidden ${
-          open ? "translate-x-0" : "translate-x-full"
-        }`}
+        className="
+        relative
+        flex
+        h-14
+        items-center
+        justify-center
+        overflow-hidden
+        rounded-full
+        border
+        border-white/20
+        bg-white/10
+        px-6
+        shadow-2xl
+        backdrop-blur-xl
+        "
       >
-        <div className="flex h-full flex-col justify-center gap-8 px-10">
 
-          {links.map((link) => (
+
+        <AnimatePresence mode="wait">
+
+
+        {!searchOpen && !transitioning && (
+
+          <motion.div
+
+            key="menu"
+
+            initial={{
+              opacity:0,
+              scale:1
+            }}
+
+            animate={{
+              opacity:1,
+              scale:1
+            }}
+
+            exit={{
+              opacity:0,
+              scale:0.5
+            }}
+
+            transition={{
+              duration:0.3
+            }}
+
+            className="
+            flex
+            items-center
+            gap-5
+            "
+
+          >
+
+
             <Link
-              key={link.name}
-              href={link.href}
-              onClick={() => setOpen(false)}
-              className="text-2xl font-bold uppercase tracking-[0.25em] text-white transition hover:text-orange-400"
+              href="/"
+              className="
+              font-cinzel
+              text-lg
+              font-bold
+              tracking-[0.25em]
+              text-white
+              "
             >
-              {link.name}
+              VOLMERRA
             </Link>
-          ))}
 
-        </div>
-      </div>
-    </>
+
+            <div className="flex items-center gap-4">
+
+
+              {menu.map((item)=>{
+
+                const Icon=item.icon;
+
+                return (
+
+                  <Link
+                    key={item.name}
+                    href={item.href}
+                    className="
+                    text-white/80
+                    transition
+                    hover:scale-110
+                    hover:text-white
+                    "
+                  >
+
+                    <Icon size={22}/>
+
+                  </Link>
+
+                )
+
+              })}
+
+
+              <button
+                onClick={openSearch}
+                className="
+                text-white/80
+                transition
+                hover:scale-110
+                hover:text-white
+                "
+              >
+
+                <Search size={22}/>
+
+              </button>
+
+
+            </div>
+
+
+          </motion.div>
+
+        )}
+
+
+
+        {searchOpen && (
+
+          <motion.div
+
+            key="search"
+
+            initial={{
+              opacity:0,
+              scale:0.7
+            }}
+
+            animate={{
+              opacity:1,
+              scale:1
+            }}
+
+            transition={{
+              duration:0.4
+            }}
+
+            className="
+            absolute
+            inset-0
+            flex
+            items-center
+            px-5
+            "
+
+          >
+
+
+            <input
+
+              autoFocus
+
+              placeholder="Volmerra'da ara..."
+
+              className="
+              flex-1
+              bg-transparent
+              text-white
+              outline-none
+              placeholder:text-white/50
+              "
+
+            />
+
+
+            <button
+
+              onClick={closeSearch}
+
+              className="
+              text-white
+              transition
+              hover:rotate-90
+              "
+
+            >
+
+              <X size={24}/>
+
+            </button>
+
+
+          </motion.div>
+
+        )}
+
+
+
+        </AnimatePresence>
+
+
+      </motion.nav>
+
+
+    </header>
+
   );
+
 }
